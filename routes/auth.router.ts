@@ -1,27 +1,26 @@
 import { Router } from "express";
+import { createLoginUsecase } from "../libs/auth/usecase";
 
 const router = Router();
 //
-router.post("/login", (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
     const { email: strEmail, token: strToken } = req.body;
-    console.log({ strEmail,strToken });
+    console.log({ strEmail, strToken });
 
-    res.send({ strEmail,strToken });
+    const objLoginRes = await createLoginUsecase({ objBody: { strToken } });
+
+    res.send(objLoginRes);
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 });
-//
-router.post("/", (req, res, next) => {
+// will be implemented later
+router.post("/logout", (req, res, next) => {
   try {
-    const {
-      longUrl: strLongUrl,
-      customAlias: strcustomAlias,
-      topic: strTopic,
-    } = req.body;
-    console.log({ strLongUrl, strTopic, strcustomAlias });
-    res.send({ strLongUrl, strTopic, strcustomAlias });
+    const { strToekn } = req.body;
+    console.log({ strToekn });
+    res.send({ strToekn });
   } catch (err) {
     throw new Error(err);
   }
