@@ -6,9 +6,11 @@ import {
   createRedisClientFactory,
   createRedisRSAKEYS,
   getRedisValue,
+  setValueRedis,
 } from "./redisConfig";
 import { createClient } from "redis";
 import verifyAccessTokenFactory from "./authMiddleware";
+import rateLimiterFactory from "./rateLimiter";
 
 const verifyGoogleToken = verifyGoogleTokenFactory({
   GoogleAuth2: OAuth2Client,
@@ -28,4 +30,15 @@ const verifyAccessToken = verifyAccessTokenFactory({
   jwtVerify,
 });
 
-export { verifyGoogleToken, getPgConnection, createRedisClient,verifyAccessToken };
+const rateLimiter = rateLimiterFactory({
+  createRedisClient,
+  getRedisValue,
+  setValueRedis,
+});
+export {
+  verifyGoogleToken,
+  getPgConnection,
+  createRedisClient,
+  verifyAccessToken,
+  rateLimiter
+};

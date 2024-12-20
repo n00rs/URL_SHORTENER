@@ -1,3 +1,4 @@
+import { RedisCommandArgument } from "@redis/client/dist/lib/commands";
 import { NextFunction, Request, Response } from "express";
 import { OAuth2Client, TokenPayload } from "google-auth-library";
 import { Pool, Client } from "pg";
@@ -48,9 +49,9 @@ export type TcreateRedisRSAKEYS = (objParams: { intUserId: number }) => {
 };
 //
 export type TsetValueRedis = (objParams: {
-  strKey?: string;
-  strValue?: string;
-  strExpiry?: string;
+  strKey?: RedisCommandArgument;
+  strValue?: RedisCommandArgument | number;
+  intExpiry?: number;
   objRedisClient: TredisClient;
 }) => Promise<void>;
 //
@@ -86,3 +87,15 @@ export type TgeneratePublicPrivateKey = () => Promise<{
   strPublicKey: string;
   strPrivateKey: string;
 }>;
+
+export type TrateLimiterFactory = (objParams: {
+  createRedisClient: TcreateRedisClient;
+  getRedisValue: TgetRedisValue;
+  setValueRedis: TsetValueRedis;
+}) => TrateLimiter;
+
+//
+export type TrateLimiter = (objParams: {
+  strUserEmail: string;
+  intUserId: string;
+}) => Promise<void>;

@@ -1,4 +1,4 @@
-import { TcreateRedisClientFactory } from "./verifyToken.model";
+import { TcreateRedisClientFactory, TsetValueRedis } from "./verifyToken.model";
 
 /**
  * Factory function to create a Redis client instance.
@@ -42,12 +42,12 @@ export function createRedisClientFactory({
 export const setValueRedis = async ({
   strKey = "",
   strValue = "",
-  strExpiry = "",
+  intExpiry = 0,
   objRedisClient,
-}) => {
+}:Parameters<TsetValueRedis>[0]) => {
   try {
-    if (strExpiry) {
-      await objRedisClient.set(strKey, strValue, { EX: strExpiry }); // Set with expiration
+    if (intExpiry) {
+      await objRedisClient.set(strKey, strValue, { EX: intExpiry }); // Set with expiration
     } else {
       await objRedisClient.set(strKey, strValue); // Set without expiration
     }
