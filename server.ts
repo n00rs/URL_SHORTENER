@@ -22,7 +22,7 @@ app.get("*",(req,res)=>{
 app.use((err, req, res, next) => {
   console.error(err, "-------------");
   const statusCode = err.statusCode ? err.statusCode : 400;
-  res.status(statusCode).json(err.message);
+  res.status(statusCode).json(err.message || err);
 });
 
 app.listen(process.env.PORT || 5005, () =>

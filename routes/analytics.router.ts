@@ -1,29 +1,42 @@
 import { Router } from "express";
+import { getAnalyticsUsecase } from "../libs/analytics/usecase";
 
 const routes = Router();
 
-//
-routes.get("/:alias", (req, res, next) => {
+routes.get("/overall", async (req, res, next) => {
   try {
-    const { alias } = req.params;
-    console.log(alias);
-    res.send({ alias });
+    const { intUserId } = req.body;
+
+    const objTopicData = await getAnalyticsUsecase({
+      objBody: { intUserId, strType: "OVERALL" },
+    });
+    res.send(objTopicData);
   } catch (err) {
     throw new Error(err);
   }
 });
-routes.get("/topics/:topic", (req, res, next) => {
+
+//
+routes.get("/:alias", async (req, res, next) => {
+  try {
+    const { alias: strcustomAlias } = req.params;
+
+    const objAliasData = await getAnalyticsUsecase({
+      objBody: {  strType: "ALIAS", strcustomAlias },
+    });
+    res.send(objAliasData);
+  } catch (err) {
+    throw new Error(err);
+  }
+});
+routes.get("/topics/:topic", async (req, res, next) => {
   try {
     const { topic: strTopic } = req.params;
-    console.log(strTopic);
-    res.send({ strTopic });
-  } catch (err) {
-    throw new Error(err);
-  }
-});
-routes.get("/overall", (req, res, next) => {
-  try {
-    res.send({ alias: "overall" });
+
+    const objTopicData = await getAnalyticsUsecase({
+      objBody: {  strType: "TOPIC", strTopic },
+    });
+    res.send(objTopicData);
   } catch (err) {
     throw new Error(err);
   }

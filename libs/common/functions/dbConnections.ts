@@ -33,9 +33,11 @@ export function getPgConnectionFactory({
     try {
       if (blnPool) {
         const pool = new PgPool({
+          user: process.env.PG_USER,
+          password: process.env.PG_PASSWORD,
           host: strHost || process.env.PG_HOST,
-          user: strDbName || process.env.PG_DB_NAME,
           port: strPort || process.env.PG_PORT,
+          database: strDbName || process.env.PG_DB_NAME,
         });
         return pool;
       }
