@@ -6,7 +6,6 @@ const router = Router();
 router.post("/login", async (req, res, next) => {
   try {
     const { email: strEmail, token: strToken } = req.body;
-    console.log({ strEmail, strToken });
 
     const objLoginRes = await createLoginUsecase({ objBody: { strToken } });
 

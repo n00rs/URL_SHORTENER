@@ -25,13 +25,28 @@ export default function createLoginUsecaseFactory({
   }) => {
     objConnection = objConnection || (await getPgConnection());
     try {
-      console.log(strToken, strMailId);
       if (!strToken) throw new Error("TOKEN_NOT_PROVIDED");
       //   verify google token0
       const objUserDetails = await verifyGoogleToken({ strToken });
+      // const objUserDetails = {
+      //   iss: "https://accounts.google.com",
+      //   azp: "776116297541-4pu91g6e8jquc1fitr0n5b0ql5a5coe1.apps.googleusercontent.com",
+      //   aud: "776116297541-4pu91g6e8jquc1fitr0n5b0ql5a5coe1.apps.googleusercontent.com",
+      //   sub: "101770523992358983985",
+      //   hd: "nucore.in",
+      //   email: "noorsha_@nucore.in",
+      //   email_verified: true,
+      //   nbf: 1734602565,
+      //   name: "Noorsha Shaheen",
+      //   picture:
+      //     "https://lh3.googleusercontent.com/a/ACg8ocJH2KUSXQs3awlI1JCDu-I8bGd7X7_KfGNPx8AhUE13sP9b2A=s96-c",
+      //   given_name: "Noorsha",
+      //   family_name: "Shaheen\t",
+      //   iat: 1734602865,
+      //   exp: 1734606465,
+      //   jti: "686db79e2fb992f31dab0b9640f9cef3f802b49c",
+      // };
 
-
-      console.log(objUserDetails);
       // save user details in db
       const objUserData = await createLoginDb({
         strMaild: objUserDetails.email?.trim(),

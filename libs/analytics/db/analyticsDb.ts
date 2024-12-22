@@ -23,7 +23,6 @@ export function getLogDbFactory({
         // to get data realated specifc user
       intUserId &&
         (strWhereReplace += ` AND tu.fk_bint_user_id = ${intUserId} `);
-        console.log(objQueries.objGet.strGetLogDetails.replace(/{WHERE}/, strWhereReplace));
         
       const { rows: arrLogData }: TarrGetLogDetails = await objConnection.query(
         objQueries.objGet.strGetLogDetails.replace(/{WHERE}/, strWhereReplace)

@@ -17,7 +17,6 @@ router.get("/:alias", async (req, res, next) => {
     const strUserAgent = req.headers["user-agent"] || "";
     const { alias: strcustomAlias } = req.params;
     const { intUserId, strUserEmail } = req.body;
-    console.log({ strcustomAlias });
     //getting redirect URL and creating log
     const strRedirectUrl = await getUrlShortUsecase({
       objBody: {

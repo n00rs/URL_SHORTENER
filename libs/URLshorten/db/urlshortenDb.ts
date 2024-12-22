@@ -42,7 +42,6 @@ export function createShortenDbFactory({
     strcustomAlias,
   }) => {
     try {
-      console.log(objQueries);
       const arrParams = [
         intUserId,
         strLongUrl,
@@ -55,10 +54,8 @@ export function createShortenDbFactory({
           objQueries.objCreate.strCreateShortenUrl,
           arrParams
         );
-      console.log(arrCreateShortUrl);
       return arrCreateShortUrl[0];
     } catch (err) {
-      console.log(err);
       if (err.constraint === "unique_alias_non_blocked")
         throw new Error("ALIAS_ALREADY_TAKEN");
       else throw new Error(err);
@@ -88,7 +85,6 @@ export function getUrlShortDbFactory({
    */
   return async ({ strcustomAlias, objConnection }) => {
     try {
-      console.log(strcustomAlias);
       const { rows: arrUrlDetails }: { rows: TobjUrlDetails[] } =
         await objConnection.query(objQueries.objGet.strGetShortenUrl, [
           strcustomAlias,

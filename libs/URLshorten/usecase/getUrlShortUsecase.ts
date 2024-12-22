@@ -90,7 +90,6 @@ export default function getUrlShortUsecaseFactory({
         objConnection,
       });
 
-      console.log(strLongUrl);
       return strLongUrl;
     } catch (err) {
       throw new Error(err);

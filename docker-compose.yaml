@@ -1,0 +1,22 @@
+name: url-shortener
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=db_the_alter_office
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=postgres
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+  url-app:
+    image: n00rs/url_shortener
+    ports: 
+      - 3000:3000
+    depends_on:
+      - postgres
+      - redis
