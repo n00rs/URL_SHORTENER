@@ -12,7 +12,7 @@ router.post("/login", async (req, res, next) => {
 
     res.send(objLoginRes);
   } catch (err) {
-    throw err;
+    next(err);
   }
 });
 // will be implemented later
@@ -22,7 +22,7 @@ router.post("/logout", (req, res, next) => {
     console.log({ strToekn });
     res.send({ strToekn });
   } catch (err) {
-    throw new Error(err);
+    next(err);
   }
 });
 export default router;
