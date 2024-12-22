@@ -11,13 +11,13 @@ app.use(cors());
 
 app.use(express.json({ limit: "50mb" }));
 
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname+"/index.html"))
+})
 app.use("/api/auth",authRoutes);
 app.use(verifyAccessToken);
 app.use("/api/shorten",shortenRoutes);
 app.use("/api/analytics",analyticsRoutes);
-app.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname+"/index.html"))
-})
 
 app.use((err, req, res, next) => {
   console.error(err, "-------------");

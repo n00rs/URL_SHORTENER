@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in with Google</title>
+
+    <!-- Include the Google Identity Services JavaScript library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <h1>Sign in with Google</h1>
+
+    <!-- Google Sign-In Button (use the button with the specified ID) -->
+    <div id="g_id_onload"
+         data-client_id="776116297541-4pu91g6e8jquc1fitr0n5b0ql5a5coe1.apps.googleusercontent.com" 
+         data-callback="handleCredentialResponse">
+    </div>
+
+    <script>
+        // Callback function to handle the sign-in response
+        function handleCredentialResponse(response) {
+            const id_token = response.credential;
+            console.log("ID Token:", id_token);
+
+            // Send ID token to your server for verification and user login
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ token: id_token||'eyJhbGciOiJSUzI1NiIsImtpZCI6IjU2NGZlYWNlYzNlYmRmYWE3MzExYjlkOGU3M2M0MjgxOGYyOTEyNjQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI3NzYxMTYyOTc1NDEtNHB1OTFnNmU4anF1YzFmaXRyMG41YjBxbDVhNWNvZTEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI3NzYxMTYyOTc1NDEtNHB1OTFnNmU4anF1YzFmaXRyMG41YjBxbDVhNWNvZTEuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDE3NzA1MjM5OTIzNTg5ODM5ODUiLCJoZCI6Im51Y29yZS5pbiIsImVtYWlsIjoibm9vcnNoYUBudWNvcmUuaW4iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNzM0NTk3NjM2LCJuYW1lIjoiTm9vcnNoYSBTaGFoZWVuIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0pIMktVU1hRczNhd2xJMUpDRHUtSThiR2Q3WDdfS2ZHTlB4OEFoVUUxM3NQOWIyQT1zOTYtYyIsImdpdmVuX25hbWUiOiJOb29yc2hhIiwiZmFtaWx5X25hbWUiOiJTaGFoZWVuXHQiLCJpYXQiOjE3MzQ1OTc5MzYsImV4cCI6MTczNDYwMTUzNiwianRpIjoiNDU3ODdiNDM5MDQzNzJlYjIzMTMxMjMzN2NmMmZjYTY5OTZlMWQ0ZCJ9.cC9cvHRJ4rRazdqsMhdzbb-y1FxyXr-BRGUZIpMPUHqXjFv5Jp99YGJvUsCORPL_QVnTmwlSlHDHcZSU61M6BUZlqkBSHjAeBPV86MqAKm9xeQyrFMlZ4FWm325TdL3F27iEGDFyXHjeGaYttkPkmUqiDawJSZlFzfN-odRy7DZJJVylPBlDy1z4z4_NqpQCD1CY3ZcKcGzQkrGgNkSyNqJVhWUL4zDSBkv9A7ZA6ipLkwmoXFpjZOE5NQ4rAHFnzhNNEt5jkd4_sL2ZY8P6L05cj_U07AHveiZGX9hfHgD4Kno2aTlm-CqB8NYyCUSBGJ5OtwJD6zu8pJZkeNhYLQ' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Login successful:', data);
+                // Handle successful login here (e.g., redirect or display user info)
+                alert('Login successful! Welcome ' + data.user.name);
+            })
+            .catch(error => {
+                console.error('Error during login:', error);
+                // Handle error (e.g., show an error message to the user)
+            });
+        }
+    </script>
+</body>
+</html>
